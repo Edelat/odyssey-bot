@@ -1,0 +1,109 @@
+$nomention
+$if[$isAdmin[$authorID]==false]
+$title[:error: Te faltan permisos]
+$description[Para ejecutar el comando nececitas el permiso de 
+Administrator
+]
+$else
+$color[EC3434]
+$title[Verificación]
+$description[Has click al boton y completa los pasos para verificarse]
+$color[12C700]
+$footer[$serverName[$guildID]]
+$addButton[yes;vf;Verificarse;success]
+$setServerVar[vrole;$message[role-dar]]
+$if[$message[role-quitar]==]
+$setServerVar[vqrole;null]
+$else
+$setServerVar[vqrole;$message[role-quitar]]
+$endif
+$endif
+$nomention
+$ephemeral
+$title[Verificacion]
+$description[Elije el numero correcto de lo que hay en la imagen]
+$removeButtons
+$if[$random[1;6]==1]
+$image[https://media.discordapp.net/attachments/1091774945786343446/1093346394804342834/IMG_0852.png]
+$setUserVar[cphn;843]
+$elseif[$random[1;6]==2]
+$image[https://media.discordapp.net/attachments/1091774945786343446/1093346395026636910/IMG_0851.png]
+$setUserVar[cphn;929]
+$elseif[$random[1;6]==3]
+$image[https://media.discordapp.net/attachments/1091774945786343446/1093346395265708122/IMG_0849.png]
+$setUserVar[cphn;562]
+$elseif[$random[1;6]==4]
+$image[https://media.discordapp.net/attachments/1091774945786343446/1093346395685146716/IMG_0848.png]
+$setUserVar[cphn;951]
+$elseif[$random[1;6]==5]
+$image[https://media.discordapp.net/attachments/1091774945786343446/1093346395982938203/IMG_0847.png]
+$setUserVar[cphn;792]
+$elseif[$random[1;6]==6]
+$image[https://media.discordapp.net/attachments/1091774945786343446/1093346396242989176/IMG_0846.png]
+$setUserVar[cphn;988]
+$endif
+$newSelectMenu[cph;1;1;Que numero tiene la imagen?]
+$addSelectMenuOption[cph;$random[111;999];bad-1;;]
+$addSelectMenuOption[cph;$random[190;999];bad-2;;]
+$addSelectMenuOption[cph;$random[211;999];bad-3;;]
+$addSelectMenuOption[cph;$getUserVar[cphn];good-1;;]
+$addSelectMenuOption[cph;$random[411;999];bad-4;;]
+$addSelectMenuOption[cph;$random[911;999];bad-5;;]
+$addSelectMenuOption[cph;$random[511;999];bad-6;;]
+
+$nomention
+$async[msg]
+$deleteIn[4s]
+$endasync
+$ephemeral
+$removeComponent[cph]
+$if[$message==bad-1]
+$title[:error: Lo siento no es la opción correcta]
+$description[Intenta de nuevo]
+$color[EC3434]
+$elseif[$message==bad-2]
+$title[:error: Lo siento no es la opción correcta]
+$description[Intenta de nuevo]
+$color[EC3434]
+$elseif[$message==bad-3]
+$title[:error: Lo siento no es la opción correcta]
+$description[Intenta de nuevo]
+$color[EC3434]
+$elseif[$message==bad-4]
+$title[:error: Lo siento no es la opción correcta]
+$description[Intenta de nuevo]
+$color[EC3434]
+$elseif[$message==bad-5]
+$title[:error: Lo siento no es la opción correcta]
+$description[Intenta de nuevo]
+$color[EC3434]
+$elseif[$message==bad-6]
+$title[:error: Lo siento no es la opción correcta]
+$description[Intenta de nuevo]
+$color[EC3434]
+$elseif[$message==good-1]
+$title[:succes: Fuiste verificado]
+$description[Que tengas una buena experiencia en $serverName[$guildID]]
+$color[95D58F]
+$await[msg]
+$try
+$giveRole[$authorID;$getServerVar[vrole]]
+$catch
+$title[:warning~1: Error al dar el rol]
+$description[Verifica que el bot tenga el permiso de Manage Roles o que el rol del bot sea mayor al rol <@&$getServerVar[vrole]> que es el rol a dar]
+$color[FFC300]
+$endtry
+$if[$getServerVar[vqrole]==null]
+$c[Stop]
+$else
+$try
+$takeRole[$authorID;$getServerVar[vqrole]]
+
+$catch
+$title[:warning~1: Error al dar el rol]
+$description[Verifica que el bot tenga el permiso de Manage Roles o que el rol del bot sea mayor al rol <@&$getServerVar[vrole]> que es el rol a dar]
+$color[FFC300]
+$endtry
+$endif
+$endif
+$endif
